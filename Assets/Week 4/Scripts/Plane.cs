@@ -12,16 +12,20 @@ public class Plane : MonoBehaviour
     LineRenderer lineRenderer;
     Vector2 currentPos;
     Rigidbody2D rb2D;
-    public float speed = 1;
+    public float speed;
     public AnimationCurve landing;
     float landingtimer;
     Vector2 randompos;
     float randomx;
     float randomy;
+    SpriteRenderer spriteRenderer;
+    int random;
+    public List<Sprite> spritelist;
 
 
    void Start()
     {
+        speed = Random.Range(1, 3);
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
@@ -29,6 +33,11 @@ public class Plane : MonoBehaviour
         randomx = Random.Range(-5, 5);
         randomy = Random.Range(-5, 5);
         randompos = new Vector2(randomx, randomy);
+        transform.position = randompos;
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+       spriteRenderer = GetComponent<SpriteRenderer>();
+        random = Random.Range(0, 3);
+        spriteRenderer.sprite = spritelist[random];
     }
 
     void FixedUpdate()
