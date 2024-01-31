@@ -15,6 +15,10 @@ public class Plane : MonoBehaviour
     public float speed = 1;
     public AnimationCurve landing;
     float landingtimer;
+    Vector2 randompos;
+    float randomx;
+    float randomy;
+
 
    void Start()
     {
@@ -22,6 +26,9 @@ public class Plane : MonoBehaviour
         lineRenderer.positionCount = 1;
         lineRenderer.SetPosition(0, transform.position);
         rb2D = GetComponent<Rigidbody2D>();
+        randomx = Random.Range(-5, 5);
+        randomy = Random.Range(-5, 5);
+        randompos = new Vector2(randomx, randomy);
     }
 
     void FixedUpdate()
