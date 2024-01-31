@@ -21,6 +21,8 @@ public class Plane : MonoBehaviour
     SpriteRenderer spriteRenderer;
     int random;
     public List<Sprite> spritelist;
+    CircleCollider2D circleCollider;
+    float veryclose;
 
 
    void Start()
@@ -38,6 +40,8 @@ public class Plane : MonoBehaviour
        spriteRenderer = GetComponent<SpriteRenderer>();
         random = Random.Range(0, 3);
         spriteRenderer.sprite = spritelist[random];
+        circleCollider = GetComponent<CircleCollider2D>();
+        veryclose = 0.5f;
     }
 
     void FixedUpdate()
@@ -86,7 +90,25 @@ public class Plane : MonoBehaviour
             }
         }
     }
-   void OnMouseDown()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        spriteRenderer.color = Color.red;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        spriteRenderer.color = Color.white;
+    }
+    private void OnTriggerStay(Collider collision)
+    {
+        float dist = Vector3.Distance(transform.position, collision.transform.position);
+        if (dist < veryclose)
+        {
+            Destroy(gameObject);
+        }
+       
+    }
+    void OnMouseDown()
     {
         points = new List<Vector2>();
         Vector2 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
