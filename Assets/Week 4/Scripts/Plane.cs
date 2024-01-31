@@ -23,6 +23,8 @@ public class Plane : MonoBehaviour
     public List<Sprite> spritelist;
     CircleCollider2D circleCollider;
     float veryclose;
+    public bool canland;
+  
 
 
    void Start()
@@ -58,7 +60,7 @@ public class Plane : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Space)) 
+        if (canland) 
         {
             landingtimer += 0.5f * Time.deltaTime;
             float interpolation = landing.Evaluate(landingtimer);
