@@ -14,6 +14,7 @@ public class Knight : MonoBehaviour
     public float health;
     public float maxhealth = 5;
     bool isdead = false;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -47,14 +48,14 @@ public class Knight : MonoBehaviour
     {
         if (isdead) return;
         clickingonself=true;
-       takeDamage(1);
+        SendMessage("takeDamage", 1);
 
     }
     private void OnMouseUp()
     {
         clickingonself=false;
     }
-    void takeDamage(float damage)
+    public void takeDamage(float damage)
     {
         health -= damage;
         health = Mathf.Clamp(health, 0, maxhealth);
