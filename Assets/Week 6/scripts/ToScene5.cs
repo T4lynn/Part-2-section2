@@ -19,7 +19,7 @@ public class ToScene5 : MonoBehaviour
     }
     public void setres2()
     {
-        Screen.SetResolution(1080, 1920, true);
+        Screen.SetResolution(1920, 1080, true);
         Debug.Log("set to HD");
     }
 }
