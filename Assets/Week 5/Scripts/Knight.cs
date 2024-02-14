@@ -21,7 +21,8 @@ public class Knight : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        health = maxhealth;
+        health = PlayerPrefs.GetFloat("Health");
+        SendMessage("sethealth");
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -47,6 +48,11 @@ public class Knight : MonoBehaviour
         {
             animator.SetTrigger("Attack");
         }
+        if (health <= 0)
+        {
+            death();
+
+        }
     }
     private void OnMouseDown()
     {
@@ -63,14 +69,16 @@ public class Knight : MonoBehaviour
     {
         health -= damage;
         health = Mathf.Clamp(health, 0, maxhealth);
-        if (health <= 0)
-        {
-            isdead=true;
-            animator.SetTrigger("Death");
-        } else
+        PlayerPrefs.SetFloat("Health",health);
+        if (health > 0)
         {
             isdead = false;
             animator.SetTrigger("takedamage");
         }
+    }
+    void death()
+    {
+        animator.SetTrigger("Death");
+        isdead = true;
     }
 }
