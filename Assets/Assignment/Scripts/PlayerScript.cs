@@ -9,23 +9,29 @@ public class PlayerScript : MonoBehaviour
 {
     Vector2 moveto;
     float speed = 3f;
-    int coin;
+    public int coin;
     Rigidbody2D rb;
     Vector2 motion;
     Animator animator;
+
+    public void restartpos()
+    {
+        rb.position = Vector2.zero;
+        moveto = Vector2.zero;
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         //sets the coin the player has to 0. 
-        coin = 0;
+      
     }
     void Update()
     {
         //when the left mousebutton is pressed, it sets the vector2 moveto to whereever
         //was clicked. 
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetMouseButtonDown(0)&& !EventSystem.current.IsPointerOverGameObject())
+            {
             moveto = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Debug.Log(moveto);
            
@@ -45,12 +51,10 @@ public class PlayerScript : MonoBehaviour
         }
         //sets the speed the player moves at
         rb.MovePosition(rb.position + motion.normalized * speed * Time.deltaTime);
-        Debug.Log(motion);
+       // Debug.Log(motion);
     }
-  
-    //a function im planning to have called in another file.
-    public void addcoins()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        coin ++;
+        moveto = rb.position;
     }
 }
