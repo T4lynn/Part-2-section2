@@ -13,6 +13,7 @@ public class CoinCounter : MonoBehaviour
 
     public void restartcoin()
     {
+        Debug.Log("clicked");
         coin = 0;
     }
     
