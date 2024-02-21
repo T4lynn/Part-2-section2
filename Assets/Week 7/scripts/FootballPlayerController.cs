@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class FootballPlayerController : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class FootballPlayerController : MonoBehaviour
     public float maxcharge;
     Vector2 direction;
     public static FoodballPlayer currentselection { get; private set; }
+    public static float score;
+    public float nonstaticscore;
+   public TMP_Text scorecount;
 
     public static void setcurrentseletion(FoodballPlayer player)
     {
@@ -30,6 +34,9 @@ public class FootballPlayerController : MonoBehaviour
     }
     private void Update()
     {
+       nonstaticscore = score;
+        Debug.Log(score);
+        scorecount.SetText("Score: " + nonstaticscore);
         if (currentselection == null) return;
         if (Input.GetKeyDown(KeyCode.Space))
         {
