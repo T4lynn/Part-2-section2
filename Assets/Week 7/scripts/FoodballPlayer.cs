@@ -17,9 +17,9 @@ public class FoodballPlayer : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        Selected(true);
+        FootballPlayerController.setcurrentseletion(this);
     }
-    private void Selected(bool selected)
+    public void Selected(bool selected)
     {
         if (selected) { sprite.color = nice_green; } else { sprite.color = dark_red;}
         
