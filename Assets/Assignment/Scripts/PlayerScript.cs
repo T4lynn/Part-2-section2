@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Unity.Mathematics;
+using Unity.VisualScripting.AssemblyQualifiedNameParser;
+using UnityEditor.Sprites;
 
 
 public class PlayerScript : MonoBehaviour
@@ -16,6 +20,11 @@ public class PlayerScript : MonoBehaviour
     Vector2 motion;
     Animator animator;
     Vector2 thruholepos;
+    public AnimationCurve curve;
+    float interpolation;
+    SpriteRenderer sprite;
+    float timer;
+    bool triggerlerp;
 
     // resets the position of the player, and loads the first scene
     public void restartpos()
@@ -27,10 +36,13 @@ public class PlayerScript : MonoBehaviour
     }
     void Start()
     {
+        //initalizes variables, and sets playerposition differently if on scene 4. 
         thruholepos = new Vector2(-4, -1);
         int currentscene = SceneManager.GetActiveScene().buildIndex;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
+        triggerlerp = false;
 
         if (currentscene == 4)
         {
@@ -41,8 +53,9 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         //when the left mousebutton is pressed, it sets the vector2 moveto to whereever
-        //was clicked. 
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        //was clicked. Won't work if you're clicking on UI or if your sprite colour is beginning to change
+        //(like when the lerp is happening). 
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject() && sprite.color == Color.white)
             {
             moveto = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Debug.Log(moveto);
@@ -51,6 +64,20 @@ public class PlayerScript : MonoBehaviour
         //sets animator parameters to motion's x and y.
         animator.SetFloat("vertical", motion.y);
         animator.SetFloat("horizontal", motion.x);
+
+        //if the variable triggerlerp is true, it does this lerp which turns the playermodel black.
+        if (triggerlerp)
+        {
+            timer += Time.deltaTime;
+            interpolation = curve.Evaluate(timer);
+            sprite.color = Color.Lerp(Color.white, Color.black, interpolation);
+
+            if (sprite.color == Color.black)
+            {
+                SceneManager.LoadScene(4);
+                triggerlerp = false;
+            }
+        }
     }
     private void FixedUpdate()
     {
@@ -70,5 +97,10 @@ public class PlayerScript : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         moveto = rb.position;
+    }
+    //a fuction that holescript1 communicates with to trigger a lerp. 
+    public void colourchange()
+    {
+        triggerlerp = true;
     }
 }

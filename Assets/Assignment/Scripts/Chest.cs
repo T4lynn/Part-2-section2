@@ -14,6 +14,7 @@ public class Chest : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
     }
+    //sets the attached component to active on mouse down. 
     private void OnMouseDown()
     {
         go.SetActive(true);

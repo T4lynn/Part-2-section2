@@ -7,19 +7,11 @@ using UnityEngine.SceneManagement;
 
 public class HoleScript1 : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject player;
+  
+    // on trigger enter sends a message that changes a variable in Playerscript. 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene(4);
+        player.SendMessage("colourchange");
     }
 }

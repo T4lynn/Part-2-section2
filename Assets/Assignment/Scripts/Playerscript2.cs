@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class Playerscript2 : MonoBehaviour
 {
+    //this is a copy of Playerscript specific to the second scene. Its been modified slightly 
+    //to jive with the gameobjects in that scene.
     Vector2 moveto;
     float speed = 3f;
     public int coin;

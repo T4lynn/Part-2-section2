@@ -8,13 +8,13 @@ public class Restartscript : MonoBehaviour
 {
     public GameObject go;
     public GameObject go2;
-    private void Start()
-    {
-    }
+
+    //sends a msg to the first gameobject that triggers 'restartpos' (its in playerscript).
     public void thisrestartspos()
     {
     go.SendMessage("restartpos");
 
+    // same as above, but for coin counter.
     }
     public void thisrestartscoin()
     {
